@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rekomendasi Lokasi UMKM Kota Tasikmalaya</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <header>
+      <h1>Rekomendasi Lokasi UMKM Kota Tasikmalaya</h1>
+    </header>
+    <main>
+      <section class="form-section">
+        <h2>Pengisian Data UMKM</h2>
+        <form action="/" method="POST">
+          <label for="jenisUmkm">Jenis UMKM</label>
+          <select id="jenisUmkm" name="jenisUmkm" required>
+            <option value="" disabled selected>Pilih jenis UMKM</option>
+            <option value="sembako">Sembako</option>
+            <option value="kuliner_nonis">Kuliner Non-Islam</option>
+          </select>
+          <button type="submit">Cari Lokasi</button>
+        </form>
+      </section>
+
+      <section class="map-section">
+        <h2>Peta Lokasi</h2>
+        <div id="map"> 
+            {{ map_html|safe }} 
+        </div>
+      </section>
+      
+      <section class="result-section">
+        <h2>Hasil Rekomendasi</h2>
+        {% if recommendations %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>KECAMATAN</th>
+                        <th>DESA</th>
+                        <th>NILAI</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recommendation in recommendations %}
+                    <tr>
+                        <td>{{ recommendation.KECAMATAN }}</td>
+                        <td>{{ recommendation.DESA }}</td>
+                        <td>{{ recommendation.Total_Score }}</td>
+                        <td>{{ recommendation.REKOMENDASI }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>Tidak ada rekomendasi yang ditemukan.</p>
+        {% endif %}
+    </section>      
+    </main>
+    <footer>
+      <p>&copy; 2024 UAS Matakuliah Pemrograman Aplikasi Berbasik Platform</p>
+    </footer>
+  </body>
+</html>
